@@ -10,8 +10,11 @@ describe('Interactuando con elementos', () =>{
         await page.goto('https://demo.guru99.com/test/simple_context_menu.html')
         
         // Click derecho
-        await page.click('#authentication > span', { button: 'right', delay:500})
+        //await page.click('#authentication > span', { button: 'right', delay:500})
         //await page.waitForTimeOut(3000)
+
+        // Doble click
+        await page.click('#authentication > button', { clickCount: 2, delay: 500})
 
         await browser.close()
     },55000)
