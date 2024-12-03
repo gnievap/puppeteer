@@ -20,6 +20,8 @@ describe('Interactuando con elementos', () =>{
         // Doble click
         await page.click('#authentication > button', { clickCount: 2, delay: 500})
     
+        await page.goto('https://devexpress.github.io/testcafe/example/')
+        await page.type('#developer-name', 'Gabs', { delay: 1000})
 
         await browser.close()
     },55000)
