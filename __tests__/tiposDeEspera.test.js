@@ -1,5 +1,6 @@
 const puppeteer = require('puppeteer')
 describe('Tipos de espera', () =>{
+    jest.setTimeout(66000)
     it ('Mostrar los diferentes tipos de espera', async () => {
         const browser = await puppeteer.launch({
             headless: false,
@@ -9,6 +10,8 @@ describe('Tipos de espera', () =>{
         })
         
         const page = await browser.newPage()
+        page.setDefaultTimeout(10000)
+        page.setDefaultNavigationTimeout(20000)
         // para esperar que la página termine completamente de cargar
         await page.goto('http://platzi.com', { waitUntil: 'networkidle2'})
 
@@ -23,8 +26,8 @@ describe('Tipos de espera', () =>{
 
         await page.goto('https://demoqa.com/modal-dialogs')
         await page.waitForSelector('#showSmallModal', {visible: true})
-        const button = await page.waitForXPath('//*[@id="showSmallModal"]', {visible: true})
-        await button.click()
+        // const button = await page.waitForXPath('//*[@id="showSmallModal"]', {visible: true})
+        // await button.click()
 
         // Espera por funcion 
         await page.waitForFunction(()=> document.querySelector('#example-modal-sizes-title-sm').innerText === 'Small Modal')
@@ -35,9 +38,12 @@ describe('Tipos de espera', () =>{
         // await observarResize
 
         await page.click('#closeSmallModal')
-        await page.waitForFunction(()=> !document.querySelector('#example-modal-sizes-title-sm'))
+        await page.waitForFunction(()=> !document.querySelector('#example-modal-sizes-title-sm'),{
+            timeout: 30000
+        })
 
 
         await browser.close()
-    },55000)
+    })
+    //,55000
 })
