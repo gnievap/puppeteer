@@ -3,7 +3,7 @@ describe('Extrayendo informacion', () =>{
 
     let browser
     let page
-    beforeEach( async ()=>{
+    beforeAll( async ()=>{
         browser = await puppeteer.launch({
             headless: false,
             defaultViewport: null,
@@ -11,20 +11,19 @@ describe('Extrayendo informacion', () =>{
         })
 
         page = await browser.newPage()
-    })
+          // para esperar que la página termine completamente de cargar
+        await page.goto('http://platzi.com', { waitUntil: 'networkidle0'})
+    }, 10000)
 
-    afterEach(async ()=>{
+    afterAll(async ()=>{
         await browser.close()
     })
 
 
     it ('Extraer el titulo de la pagina y la url', async () => {
-        const browser = await puppeteer.launch({
-            
-        })
+        
       
-        // para esperar que la página termine completamente de cargar
-        await page.goto('http://platzi.com', { waitUntil: 'networkidle0'})
+      
         const titulo = await page.title()
         const url = await page.url()
 
@@ -35,15 +34,9 @@ describe('Extrayendo informacion', () =>{
     },55000)
 
     it ('Extraer la informacion de un elemento', async () => {
-        const browser = await puppeteer.launch({
-            headless: false,
-            defaultViewport: null,
-            executablePath: 'C://Program Files//Google//Chrome//Application//chrome.exe',
-        })
+   
         
-        const page = await browser.newPage()
         // para esperar que la página termine completamente de cargar
-        await page.goto('http://platzi.com', { waitUntil: 'networkidle0'})
         await page.waitForSelector('body > main > header > div > nav > ul > li:nth-child(4) > a')
       
         const nombreButton = await page.$eval('body > main > header > div > nav > ul > li:nth-child(4) > a', (button)=>button.textContent)
@@ -69,16 +62,10 @@ describe('Extrayendo informacion', () =>{
 
     it('Contar los elementos de una página', async () => {
         
-        })
-
-        
-        await page.goto('http://platzi.com', { waitUntil: 'networkidle0'})
         const images = await page.$$eval('img', (imagenes)=>imagenes.length)
         console.log('Cantidad de imagenes:', images)
 
         
-       
-        await browser.close()
     }, 5000)
 
 }
