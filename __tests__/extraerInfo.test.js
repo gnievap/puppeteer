@@ -1,13 +1,28 @@
 const puppeteer = require('puppeteer')
 describe('Extrayendo informacion', () =>{
-    it ('Extraer el titulo de la pagina y la url', async () => {
-        const browser = await puppeteer.launch({
+
+    let browser
+    let page
+    beforeEach( async ()=>{
+        browser = await puppeteer.launch({
             headless: false,
             defaultViewport: null,
             executablePath: 'C://Program Files//Google//Chrome//Application//chrome.exe',
         })
-        
-        const page = await browser.newPage()
+
+        page = await browser.newPage()
+    })
+
+    afterEach(async ()=>{
+        await browser.close()
+    })
+
+
+    it ('Extraer el titulo de la pagina y la url', async () => {
+        const browser = await puppeteer.launch({
+            
+        })
+      
         // para esperar que la página termine completamente de cargar
         await page.goto('http://platzi.com', { waitUntil: 'networkidle0'})
         const titulo = await page.title()
@@ -50,19 +65,13 @@ describe('Extrayendo informacion', () =>{
         // const button3 = await page.waitForXpath('body > main > header > div > nav > ul > li:nth-child(4) > a')
         // const texto3 = await page.evaluate((name)=>name.textContent, button3)
         // console.log('Texto del boton:', texto3)
-
-
-        await browser.close()
     },55000)
 
     it('Contar los elementos de una página', async () => {
-        const browser = await puppeteer.launch({
-            headless: false,
-            defaultViewport: null,
-            executablePath: 'C://Program Files//Google//Chrome//Application//chrome.exe',
+        
         })
 
-        const page = await browser.newPage()
+        
         await page.goto('http://platzi.com', { waitUntil: 'networkidle0'})
         const images = await page.$$eval('img', (imagenes)=>imagenes.length)
         console.log('Cantidad de imagenes:', images)
@@ -72,5 +81,5 @@ describe('Extrayendo informacion', () =>{
         await browser.close()
     }, 5000)
 
-
-})
+}
+)
